@@ -66,13 +66,11 @@ class ViewController: UIViewController {
         return self.hold.rx_event.filter({$0.state == .Began}).map({_ in return () })
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    func setup() {
         self.startSignal
             .flatMap({[unowned self] _ -> Observable<Int64> in
                 return interval(0.03, MainScheduler.sharedInstance).takeUntil(self.stopSignal)
-            })
+                })
             .map({ _ -> (UIColor, String) in
                 let color = UIColor(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1.0)
                 let text = "\(rand()%100)"
@@ -81,7 +79,7 @@ class ViewController: UIViewController {
             .subscribeNext({[unowned self] color, text in
                 self.text.text = text
                 self.view.backgroundColor = color
-            })
+                })
             .addDisposableTo(disposeBag)
 
         self.fontSizeSignal
@@ -98,8 +96,13 @@ class ViewController: UIViewController {
             .addDisposableTo(disposeBag)
     }
 
-    @IBAction func doneSetting(segue:UIStoryboardSegue) {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setup()
+    }
 
+    @IBAction func doneSetting(segue:UIStoryboardSegue) {
+        setup()
     }
 
     override func viewWillDisappear(animated: Bool) {
