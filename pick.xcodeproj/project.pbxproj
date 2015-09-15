@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0440B29B1BA8560800923EA3 /* DataHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440B29A1BA8560800923EA3 /* DataHolder.swift */; settings = {ASSET_TAGS = (); }; };
 		0440B29D1BA85A1100923EA3 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440B29C1BA85A1100923EA3 /* Utils.swift */; settings = {ASSET_TAGS = (); }; };
+		0440B2A11BA85C9A00923EA3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440B2A01BA85C9A00923EA3 /* SettingsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		049EB1561BA7D33B001C8113 /* MainStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049EB1551BA7D33B001C8113 /* MainStoryboard.swift */; settings = {ASSET_TAGS = (); }; };
 		04F93F281BA434A0004377C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F93F271BA434A0004377C8 /* AppDelegate.swift */; };
 		04F93F2A1BA434A0004377C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F93F291BA434A0004377C8 /* ViewController.swift */; };
@@ -21,6 +22,7 @@
 /* Begin PBXFileReference section */
 		0440B29A1BA8560800923EA3 /* DataHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataHolder.swift; sourceTree = "<group>"; };
 		0440B29C1BA85A1100923EA3 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		0440B2A01BA85C9A00923EA3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		049EB1551BA7D33B001C8113 /* MainStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainStoryboard.swift; sourceTree = "<group>"; };
 		04F93F241BA434A0004377C8 /* pick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F93F271BA434A0004377C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				04F93F331BA434A1004377C8 /* Info.plist */,
 				0440B29A1BA8560800923EA3 /* DataHolder.swift */,
 				0440B29C1BA85A1100923EA3 /* Utils.swift */,
+				0440B2A01BA85C9A00923EA3 /* SettingsViewController.swift */,
 			);
 			path = pick;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 				04F93F2A1BA434A0004377C8 /* ViewController.swift in Sources */,
 				04F93F281BA434A0004377C8 /* AppDelegate.swift in Sources */,
 				0440B29B1BA8560800923EA3 /* DataHolder.swift in Sources */,
+				0440B2A11BA85C9A00923EA3 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

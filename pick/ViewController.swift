@@ -31,7 +31,14 @@ class ViewController: UIViewController {
     }
 
     var stopSignal:Observable<()> {
-        let manualSignal:Observable<()> = tap.rx_event.filter({[unowned self] _ in return self.animating}).map({ _ in return () })
+        let manualSignal:Observable<()> = tap.rx_event
+            .filter({[unowned self] _ in return self.animating})
+            .map({ _ in return () })
+            .doOn(next:{[unowned self] _ in
+                let winner = DataHolder.shared.availableCadidates.sample()
+                DataHolder.shared.addSelect(winner)
+                self.text.text = winner
+            })
         return [manualSignal, self.disappear].asObservable().merge()
                     .doOn(next: {[unowned self] _ in self.animating = false})
     }

@@ -10,7 +10,7 @@ import Foundation
 
 let hint_key = "hint"
 let candidates_key = "candidates"
-let winners_key = "winners"
+let selected_candidates_key = "winners"
 let skip_winner_key = "skipCandidate"
 let auto_restart_key = "autoRestart"
 
@@ -29,7 +29,7 @@ class DataHolder {
 
     var selectedCandidates:[String] {
         didSet {
-            defaults.setObject(selectedCandidates, forKey: winners_key)
+            defaults.setObject(selectedCandidates, forKey: selected_candidates_key)
         }
     }
 
@@ -66,7 +66,7 @@ class DataHolder {
             ])
 
         self.candidates = defaults.objectForKey(candidates_key) as? [String] ?? []
-        self.selectedCandidates = defaults.objectForKey(winners_key) as? [String] ?? []
+        self.selectedCandidates = defaults.objectForKey(selected_candidates_key) as? [String] ?? []
         self.skipWinners = defaults.boolForKey(skip_winner_key)
         self.autoRestart = defaults.boolForKey(auto_restart_key)
         self.hint = defaults.stringForKey(hint_key) ?? ""

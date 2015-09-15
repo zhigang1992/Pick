@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -58,7 +59,7 @@
         <!--Settings-->
         <scene sceneID="xip-JZ-kOb">
             <objects>
-                <tableViewController id="4Gt-Po-Ylv" sceneMemberID="viewController">
+                <tableViewController id="4Gt-Po-Ylv" customClass="SettingsViewController" customModule="pick" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="Fe2-xs-2Bo">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -165,10 +166,31 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="5vm-de-bTQ">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationLevel="-1" indentationWidth="10" textLabel="aul-2V-eeV" style="IBUITableViewCellStyleDefault" id="6dA-Hm-l2B">
+                                        <rect key="frame" x="0.0" y="497" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6dA-Hm-l2B" id="pkz-ej-xSB">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Reset Selected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aul-2V-eeV">
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="Animation" id="BiF-w9-UOy">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="R6d-Lm-CYU">
-                                        <rect key="frame" x="0.0" y="511" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="591" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="R6d-Lm-CYU" id="qps-91-Msu">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -195,7 +217,7 @@
                             <tableViewSection headerTitle="Duration" id="lCk-qI-ZGx">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="czJ-Rk-7bL">
-                                        <rect key="frame" x="0.0" y="605" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="685" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="czJ-Rk-7bL" id="mEb-JY-LH5">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -233,6 +255,14 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="animationDuration" destination="Pfp-CW-hL9" id="qkv-y1-dZ2"/>
+                        <outlet property="animationSpeed" destination="44N-Gc-D5p" id="3yh-be-oPV"/>
+                        <outlet property="dataSource" destination="PNx-1J-fAN" id="imG-NK-HjX"/>
+                        <outlet property="resetSelecteds" destination="6dA-Hm-l2B" id="yIT-eN-p8K"/>
+                        <outlet property="restartAutomatically" destination="jch-N8-fDG" id="54C-yo-chZ"/>
+                        <outlet property="skipWinners" destination="LOh-Gf-nqa" id="NYb-TP-vhH"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T1Q-Qh-16Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="2rh-zD-CqL" userLabel="Exit" sceneMemberID="exit"/>
