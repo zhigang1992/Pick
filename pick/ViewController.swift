@@ -25,7 +25,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
 
         var animating = false
 
@@ -51,7 +50,7 @@ class ViewController: UIViewController {
             })
             .subscribeNext({ [unowned self] color in
                 self.view.backgroundColor = color
-            })
+                })
             .addDisposableTo(disposeBag)
 
 
@@ -66,10 +65,10 @@ class ViewController: UIViewController {
                 .map({[unowned self] in
                     let size = self.view.bounds.size
                     return size.height / size.width
-                })].asObservable().merge()
+                    })].asObservable().merge()
             .map({ [unowned self] scale in
                 return self.text.font.pointSize * scale
-            })
+                })
             .map({ fontSize -> CGFloat in
                 let size = UIScreen.mainScreen().bounds.size
                 let fontMaxSize = min(size.width, size.height) * 0.6
@@ -78,14 +77,14 @@ class ViewController: UIViewController {
             .map({ UIFont.systemFontOfSize($0) })
             .subscribeNext({ [unowned self] font in
                 self.text.font = font
-            })
+                })
             .addDisposableTo(disposeBag)
 
         hold.rx_event
             .filter({$0.state == .Began})
             .subscribeNext({ [unowned self] _ in
                 self.performSegueWithIdentifier("Settings", sender: nil)
-            })
+                })
             .addDisposableTo(disposeBag)
     }
 
@@ -107,10 +106,10 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
-
+    
 }
 
