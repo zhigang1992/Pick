@@ -35,24 +35,33 @@ class ViewController: UIViewController {
             .merge()
             .doOn(next: {_ in animating = false})
 
-        tap.rx_event
+        let animatingSignal = tap.rx_event
             .filter({_ in !animating})
             .doOn(next: {_ in animating = true})
             .flatMap({ _ in
                 interval(0.03, MainScheduler.sharedInstance)
                     .takeUntil(stopSignal)
             })
-            .map({ _ -> UIColor in
-                let randomRed = CGFloat(drand48())
-                let randomGreen = CGFloat(drand48())
-                let randomBlue = CGFloat(drand48())
-                return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
-            })
+            .publish()
+
+        animatingSignal.connect().addDisposableTo(disposeBag)
+
+        animatingSignal.map({ _ -> UIColor in
+            let randomRed = CGFloat(drand48())
+            let randomGreen = CGFloat(drand48())
+            let randomBlue = CGFloat(drand48())
+            return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+        })
             .subscribeNext({ [unowned self] color in
                 self.view.backgroundColor = color
                 })
             .addDisposableTo(disposeBag)
 
+        animatingSignal.map({ _ -> String in
+            return "\(rand() % 100)"
+        })
+            .bindTo(self.text.rx_text)
+            .addDisposableTo(disposeBag)
 
         [pinch.rx_event
             .map({ ($0 as! UIPinchGestureRecognizer).scale })
@@ -83,7 +92,7 @@ class ViewController: UIViewController {
         hold.rx_event
             .filter({$0.state == .Began})
             .subscribeNext({ [unowned self] _ in
-                self.performSegueWithIdentifier("Settings", sender: nil)
+                self.performSegueWithIdentifier(Segue.Settings.identifier!, sender: nil)
                 })
             .addDisposableTo(disposeBag)
     }
@@ -106,7 +115,7 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
