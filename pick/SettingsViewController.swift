@@ -13,6 +13,7 @@ import RxSwift
 class SettingsViewController: UITableViewController {
 
     @IBOutlet weak var dataSource: UITextView!
+    @IBOutlet weak var hint: UITextField!
 
     @IBOutlet weak var skipWinners: UISwitch!
     @IBOutlet weak var restartAutomatically: UISwitch!
@@ -21,7 +22,9 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var animationDuration: UISegmentedControl!
 
     @IBOutlet weak var resetSelecteds: UITableViewCell!
-    
+
+    let disappear:PublishSubject<()> = PublishSubject()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setup()
@@ -31,15 +34,15 @@ class SettingsViewController: UITableViewController {
 
     func setup() {
         let skipWinnerSignal = self.skipWinners.rx_value.publish()
-
-        skipWinnerSignal.bindTo(self.restartAutomatically.rx_enabled).addDisposableTo(disposeBag)
+        skipWinnerSignal.connect().addDisposableTo(disposeBag)
+        skipWinnerSignal.bindTo(self.restartAutomatically.rx_enabled)
+            .addDisposableTo(disposeBag)
         skipWinnerSignal.subscribeNext({[unowned self] s in
             self.resetSelecteds.textLabel?.enabled = s
         }).addDisposableTo(disposeBag)
         skipWinnerSignal.subscribeNext({s in
             DataHolder.shared.skipWinners = s
         })
-        skipWinnerSignal.connect().addDisposableTo(disposeBag)
 
         self.restartAutomatically.rx_value.subscribeNext({ r in
             DataHolder.shared.autoRestart = r
@@ -51,15 +54,29 @@ class SettingsViewController: UITableViewController {
             self.tableView.deselectRowAtIndexPath(i, animated: true)
         })
         resetSignal.flatMap({ _ -> Observable<Int> in
-            let al = UIAlertView(title: "Reset Selecteds", message: "Do you want to reset winners, and start again?", delegate: nil, cancelButtonTitle: "Cancel", otherButtonTitles: "Delete")
+            let winners = DataHolder.shared.selectedCandidates.joinWithSeparator(",")
+            let al = UIAlertView(title: "Reset Selecteds", message: "Do you want to reset \(winners), and start again?", delegate: nil, cancelButtonTitle: "Cancel", otherButtonTitles: "Delete")
             al.show()
             return al.rx_clickedButtonAtIndex.filter({$0 != al.cancelButtonIndex })
         }).subscribeNext({ _ in
             DataHolder.shared.selectedCandidates = []
         }).addDisposableTo(disposeBag)
 
+        self.hint.text = DataHolder.shared.hint
+        [self.hint.rx_text.throttle(1, MainScheduler.sharedInstance), self.disappear.map({[unowned self] _ -> String in return self.hint.text ?? "Hit it"})].asObservable().merge()
+        .subscribeNext({ DataHolder.shared.hint = $0 })
         self.dataSource.text = DataHolder.shared.candidates.joinWithSeparator("\n")
+        self.dataSource.rx_text.throttle(1, MainScheduler.sharedInstance).map({ (t:String) in
+            return t.componentsSeparatedByString("\n")
+        }).subscribeNext({ data in
+            DataHolder.shared.candidates = data
+        })
         self.skipWinners.on = DataHolder.shared.skipWinners
         self.restartAutomatically.on = DataHolder.shared.autoRestart
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        disappear.on(Event.Next(()))
     }
 }

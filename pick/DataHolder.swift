@@ -19,11 +19,16 @@ class DataHolder {
 
     let defaults = NSUserDefaults.standardUserDefaults()
 
-    var hint:String
+    var hint:String {
+        didSet {
+            defaults.setObject(hint, forKey: hint_key)
+        }
+    }
 
     var candidates:[String] {
         didSet {
             defaults.setObject(candidates, forKey: candidates_key)
+            selectedCandidates = []
         }
     }
 

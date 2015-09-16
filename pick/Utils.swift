@@ -9,8 +9,12 @@
 import Foundation
 
 extension Array {
-    func sample() -> Element {
-        let randomIndex = Int(arc4random_uniform(UInt32(self.count)))
-        return self[randomIndex]
+    func sample() -> Element? {
+        if self.count > 0 {
+            let randomIndex = Int(arc4random_uniform(UInt32(self.count)))
+            return self[randomIndex]
+        } else {
+            return nil
+        }
     }
 }

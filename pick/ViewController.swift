@@ -26,8 +26,26 @@ class ViewController: UIViewController {
     var animating = false
 
     var startSignal:Observable<()> {
-        return tap.rx_event.filter({[unowned self] _ in return !self.animating}).map({ _ in return () })
+        return tap.rx_event
+            .filter({[unowned self] _ in return !self.animating})
+            .map({ _ in return () })
             .doOn(next: {[unowned self] _ in self.animating = true})
+            .doOn(next: {
+                if DataHolder.shared.autoRestart && DataHolder.shared.availableCadidates.count == 0 {
+                    DataHolder.shared.selectedCandidates = []
+                }
+            })
+            .filter({[unowned self] _ in
+                let valid = DataHolder.shared.availableCadidates.count > 0
+                if !valid {
+                    let av = UIAlertView(title: "Finished", message: "All candidate has been selected", delegate: nil, cancelButtonTitle: "Okay", otherButtonTitles: "Restart")
+                    av.show()
+                    av.rx_clickedButtonAtIndex.filter({$0 != av.cancelButtonIndex}).subscribeNext({ _ in
+                        DataHolder.shared.selectedCandidates = []
+                    }).addDisposableTo(self.disposeBag)
+                }
+                return valid
+            })
     }
 
     var stopSignal:Observable<()> {
@@ -35,7 +53,7 @@ class ViewController: UIViewController {
             .filter({[unowned self] _ in return self.animating})
             .map({ _ in return () })
             .doOn(next:{[unowned self] _ in
-                let winner = DataHolder.shared.availableCadidates.sample()
+                let winner = DataHolder.shared.availableCadidates.sample()!
                 DataHolder.shared.addSelect(winner)
                 self.text.text = winner
             })
@@ -74,7 +92,8 @@ class ViewController: UIViewController {
     }
 
     func setup() {
-        self.text.text = DataHolder.shared.hint
+
+        setupDefault()
 
         self.startSignal
             .flatMap({[unowned self] _ -> Observable<Int64> in
@@ -82,7 +101,7 @@ class ViewController: UIViewController {
                 })
             .map({ _ -> (UIColor, String) in
                 let color = UIColor(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1.0)
-                let text = DataHolder.shared.availableCadidates.sample()
+                let text = DataHolder.shared.candidates.sample()!
                 return (color, text)
             })
             .subscribeNext({[unowned self] color, text in
@@ -105,13 +124,18 @@ class ViewController: UIViewController {
             .addDisposableTo(disposeBag)
     }
 
+    func setupDefault() {
+        self.text.text = DataHolder.shared.hint
+        self.view.backgroundColor = UIColor.whiteColor()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setup()
     }
 
     @IBAction func doneSetting(segue:UIStoryboardSegue) {
-        setup()
+        setupDefault()
     }
 
     override func viewWillDisappear(animated: Bool) {
