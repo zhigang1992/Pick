@@ -9,8 +9,9 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import MessageUI
 
-class SettingsViewController: UITableViewController {
+class SettingsViewController: UITableViewController, MFMailComposeViewControllerDelegate {
 
     @IBOutlet weak var dataSource: UITextView!
     @IBOutlet weak var hint: UITextField!
@@ -53,10 +54,14 @@ class SettingsViewController: UITableViewController {
         }).addDisposableTo(disposeBag)
 
         let resetWinnersIndex = NSIndexPath(forRow: 0, inSection: 2)
-        let resetSignal:Observable<NSIndexPath> = self.tableView.rx_itemSelected.filter({$0 == resetWinnersIndex})
-            .doOn(next:{[unowned self] i in
+
+        let tableSelect = self.tableView.rx_itemSelected.doOn(next:{[unowned self] i in
             self.tableView.deselectRowAtIndexPath(i, animated: true)
-        })
+            }).publish()
+        tableSelect.connect().addDisposableTo(disposeBag)
+
+        let resetSignal:Observable<NSIndexPath> = tableSelect
+            .filter({$0 == resetWinnersIndex})
         resetSignal.flatMap({ _ -> Observable<Int> in
             let winners = DataHolder.shared.selectedCandidates.joinWithSeparator(",")
             let al = UIAlertView(title: "Reset Selecteds", message: "Do you want to reset \(winners), and start again?", delegate: nil, cancelButtonTitle: "Cancel", otherButtonTitles: "Delete")
@@ -64,6 +69,16 @@ class SettingsViewController: UITableViewController {
             return al.rx_clickedButtonAtIndex.filter({$0 != al.cancelButtonIndex })
         }).subscribeNext({ _ in
             DataHolder.shared.selectedCandidates = []
+        }).addDisposableTo(disposeBag)
+
+        let feedbackIndexPath = NSIndexPath(forRow: 0, inSection: 5)
+        let feedbackSignal:Observable<NSIndexPath> = tableSelect.filter({$0 == feedbackIndexPath})
+        feedbackSignal.subscribeNext({[unowned self] _ in
+            let mailVC = MFMailComposeViewController()
+            mailVC.mailComposeDelegate = self
+            mailVC.setSubject("[Pick] Feedback")
+            mailVC.setToRecipients(["zhigang1992+pick@gmail.com"])
+            self.presentViewController(mailVC, animated: true, completion: nil)
         }).addDisposableTo(disposeBag)
 
         self.hint.text = DataHolder.shared.hint
@@ -87,6 +102,10 @@ class SettingsViewController: UITableViewController {
         animationDuration.rx_value
             .subscribeNext({ DataHolder.shared.animaitonDuration = Double($0) })
             .addDisposableTo(disposeBag)
+    }
+
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     override func viewWillDisappear(animated: Bool) {
