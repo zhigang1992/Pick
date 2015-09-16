@@ -70,7 +70,7 @@ class PresetViewController: UITableViewController {
                 } else {
                     let candidates = contacts.map({ (contact) -> String in
                         let names:String = [contact.firstName, contact.middleName, contact.lastName].flatMap{ name in
-                            return name.flatMap{ [$0] } ?? []
+                            return name.map({$0})
                         }.joinWithSeparator(" ")
                         return names
                     })
