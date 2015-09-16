@@ -52,7 +52,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <pinchGestureRecognizer id="kas-LC-DWx"/>
                 <tapGestureRecognizer id="r2d-7h-qJV"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="edW-af-bC6"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.29999999999999999" id="edW-af-bC6"/>
             </objects>
             <point key="canvasLocation" x="546" y="405"/>
         </scene>
