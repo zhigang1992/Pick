@@ -214,3 +214,91 @@ extension ViewController {
     }
 
 }
+
+//MARK: - SettingsViewController
+extension SettingsViewController { 
+
+    enum Reusable: String, CustomStringConvertible, ReusableViewProtocol {
+        case inputCell = "inputCell"
+
+        var kind: ReusableKind? {
+            switch (self) {
+            case inputCell:
+                return ReusableKind(rawValue: "tableViewCell")
+            }
+        }
+
+        var viewType: UIView.Type? {
+            switch (self) {
+            default:
+                return nil
+            }
+        }
+
+        var identifier: String? { return self.description } 
+        var description: String { return self.rawValue }
+    }
+
+}
+
+
+//MARK: - PresetViewController
+extension UIStoryboardSegue {
+    func selection() -> PresetViewController.Segue? {
+        if let identifier = self.identifier {
+            return PresetViewController.Segue(rawValue: identifier)
+        }
+        return nil
+    }
+}
+
+extension PresetViewController { 
+
+    enum Segue: String, CustomStringConvertible, SegueProtocol {
+        case done = "done"
+
+        var kind: SegueKind? {
+            switch (self) {
+            case done:
+                return SegueKind(rawValue: "unwind")
+            }
+        }
+
+        var destination: UIViewController.Type? {
+            switch (self) {
+            default:
+                assertionFailure("Unknown destination")
+                return nil
+            }
+        }
+
+        var identifier: String? { return self.description } 
+        var description: String { return self.rawValue }
+    }
+
+}
+extension PresetViewController { 
+
+    enum Reusable: String, CustomStringConvertible, ReusableViewProtocol {
+        case Preset = "Preset"
+
+        var kind: ReusableKind? {
+            switch (self) {
+            case Preset:
+                return ReusableKind(rawValue: "tableViewCell")
+            }
+        }
+
+        var viewType: UIView.Type? {
+            switch (self) {
+            default:
+                return nil
+            }
+        }
+
+        var identifier: String? { return self.description } 
+        var description: String { return self.rawValue }
+    }
+
+}
+

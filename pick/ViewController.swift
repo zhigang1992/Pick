@@ -51,7 +51,10 @@ class ViewController: UIViewController {
     var stopSignal:Observable<()> {
         let animationDuration = DataHolder.shared.animaitonDuration
         let autoStopSignal:Observable<()> = animationDuration > 0 ? interval(animationDuration, MainScheduler.sharedInstance).take(1).map({_ in return () }) : empty()
-        let manualSignal:Observable<()> = [tap.rx_event.map({_ in return () }), autoStopSignal].asObservable().merge()
+        let manualSignal:Observable<()> = [tap.rx_event.map({_ in return () }), autoStopSignal]
+            .asObservable()
+            .merge()
+            .take(1)
             .filter({[unowned self] _ in return self.animating})
             .map({ _ in return () })
             .doOn(next:{[unowned self] _ in
