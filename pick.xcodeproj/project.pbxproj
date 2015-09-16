@@ -24,6 +24,7 @@
 		0440B2BF1BA8FC5700923EA3 /* SectionedViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440B2B21BA8FC5700923EA3 /* SectionedViewType.swift */; settings = {ASSET_TAGS = (); }; };
 		0440B2C01BA8FC5700923EA3 /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440B2B31BA8FC5700923EA3 /* SectionModel.swift */; settings = {ASSET_TAGS = (); }; };
 		0440B2C11BA8FC5700923EA3 /* SectionModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440B2B41BA8FC5700923EA3 /* SectionModelType.swift */; settings = {ASSET_TAGS = (); }; };
+		0440B2C31BA928BD00923EA3 /* presets.json in Resources */ = {isa = PBXBuildFile; fileRef = 0440B2C21BA928BD00923EA3 /* presets.json */; settings = {ASSET_TAGS = (); }; };
 		049EB1561BA7D33B001C8113 /* MainStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049EB1551BA7D33B001C8113 /* MainStoryboard.swift */; settings = {ASSET_TAGS = (); }; };
 		04F93F281BA434A0004377C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F93F271BA434A0004377C8 /* AppDelegate.swift */; };
 		04F93F2A1BA434A0004377C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F93F291BA434A0004377C8 /* ViewController.swift */; };
@@ -51,6 +52,7 @@
 		0440B2B21BA8FC5700923EA3 /* SectionedViewType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionedViewType.swift; sourceTree = "<group>"; };
 		0440B2B31BA8FC5700923EA3 /* SectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
 		0440B2B41BA8FC5700923EA3 /* SectionModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionModelType.swift; sourceTree = "<group>"; };
+		0440B2C21BA928BD00923EA3 /* presets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = presets.json; sourceTree = "<group>"; };
 		049EB1551BA7D33B001C8113 /* MainStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainStoryboard.swift; sourceTree = "<group>"; };
 		04F93F241BA434A0004377C8 /* pick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F93F271BA434A0004377C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				0440B29C1BA85A1100923EA3 /* Utils.swift */,
 				0440B2A01BA85C9A00923EA3 /* SettingsViewController.swift */,
 				0440B2A41BA8F7DF00923EA3 /* PresetViewController.swift */,
+				0440B2C21BA928BD00923EA3 /* presets.json */,
 			);
 			path = pick;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 			files = (
 				04F93F321BA434A1004377C8 /* LaunchScreen.storyboard in Resources */,
 				04F93F2F1BA434A1004377C8 /* Assets.xcassets in Resources */,
+				0440B2C31BA928BD00923EA3 /* presets.json in Resources */,
 				04F93F2D1BA434A1004377C8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

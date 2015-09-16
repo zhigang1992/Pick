@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import SwiftyJSON
 
 struct Preset {
     let name:String
@@ -37,8 +38,19 @@ class PresetViewController: UITableViewController {
         self.tableView.delegate = nil
         self.tableView.dataSource = nil
 
-        let preset = Preset(name:"Dice", hint: "Dice", candidate: "1 2 3 4 5 6".componentsSeparatedByString(" "), skipWinner: false, autoRestart: true)
-        let allPresets = just([SectionModel(model: "", items: [preset])])
+        let path = NSBundle.mainBundle().pathForResource("presets", ofType: "json")!
+
+        let content = try! NSJSONSerialization.JSONObjectWithData(NSData(contentsOfFile: path)!, options: NSJSONReadingOptions.MutableContainers)
+        let json = JSON(content)
+        let presets = json.arrayValue.map({ (json:JSON) in
+            return Preset(name:json["name"].stringValue,
+                hint: json["hint"].stringValue,
+                candidate: json["candidate"].arrayValue.map({$0.stringValue}),
+                skipWinner: json["skipWinner"].boolValue,
+                autoRestart: json["autoRestart"].boolValue)
+        })
+
+        let allPresets = just([SectionModel(model: "", items: presets)])
 
         dataSource.cellFactory = { (tv, ip, preset:Preset) in
             let cell = tv.dequeueReusableCellWithIdentifier(Reusable.Preset.identifier!, forIndexPath: ip)
