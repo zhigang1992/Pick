@@ -87,7 +87,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
             .addDisposableTo(disposeBag)
 
         self.dataSource.text = DataHolder.shared.candidates.joinWithSeparator("\n")
-        self.dataSource.rx_text.throttle(1, MainScheduler.sharedInstance).map({ (t:String) in
+        self.dataSource.rx_text.skip(1).throttle(1, MainScheduler.sharedInstance).map({ (t:String) in
             return t.componentsSeparatedByString("\n")
         }).subscribeNext({ data in
             DataHolder.shared.candidates = data
