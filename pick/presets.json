@@ -15,7 +15,7 @@
   "hint": "Go",
   "skipWinner": true,
   "autoRestart": true,
-  "candidate": ["5 push-ups", "I ran out of ideas", "Do the house work", "Sing", "Dance", "Slap in the face", "Come up a new punishment and sent it to us"]
+  "candidate": ["5 push-ups", "I ran out of ideas", "Do the house work", "Sing", "Dance", "Slap in the face", "Come up a new punishment and sent it to us", "Call a random contact", "Text a random contact"]
 },{
   "name": "Poker",
   "hint": "Deal",
