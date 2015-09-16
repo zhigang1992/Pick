@@ -119,12 +119,17 @@ class ViewController: UIViewController {
                 })
             .addDisposableTo(disposeBag)
 
-        self.fontSizeSignal
-            .map({ UIFont.systemFontOfSize($0) })
+        let fontChanged = self.fontSizeSignal.publish()
+        fontChanged.throttle(0.5, MainScheduler.sharedInstance)
+            .subscribeNext({ (fontSize:CGFloat) in
+                DataHolder.shared.fontSize = Float(fontSize)
+        }).addDisposableTo(disposeBag)
+        fontChanged.map({ UIFont.systemFontOfSize($0) })
             .subscribeNext({ [unowned self] font in
                 self.text.font = font
                 })
             .addDisposableTo(disposeBag)
+        fontChanged.connect().addDisposableTo(disposeBag)
 
         self.holdSignal
             .subscribeNext({ [unowned self] _ in
@@ -134,6 +139,7 @@ class ViewController: UIViewController {
     }
 
     func setupDefault() {
+        self.text.font = UIFont.systemFontOfSize(CGFloat(DataHolder.shared.fontSize))
         self.text.text = DataHolder.shared.hint
         self.view.backgroundColor = UIColor.whiteColor()
     }

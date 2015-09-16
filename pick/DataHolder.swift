@@ -17,6 +17,8 @@ let auto_restart_key = "autoRestart"
 let animation_speed_key = "anmiationSpeed"
 let animation_duration_key = "anmiationDuration"
 
+let font_size_key = "fontSize"
+
 class DataHolder {
     static let shared = DataHolder()
 
@@ -93,6 +95,12 @@ class DataHolder {
         }
     }
 
+    var fontSize:Float {
+        didSet {
+            defaults.setFloat(self.fontSize, forKey: font_size_key)
+        }
+    }
+
     init () {
         defaults.registerDefaults([
             hint_key: "Hit it",
@@ -100,7 +108,8 @@ class DataHolder {
             skip_winner_key: true,
             auto_restart_key: true,
             animation_speed_key: AnimationSpeed.normal.rawValue,
-            animation_duration_key: 0
+            animation_duration_key: 0,
+            font_size_key: 60.0
             ])
 
         self.candidates = defaults.objectForKey(candidates_key) as? [String] ?? []
@@ -111,6 +120,8 @@ class DataHolder {
 
         self.animationSpeed = AnimationSpeed(rawValue: defaults.integerForKey(animation_speed_key))!
         self.animaitonDuration = defaults.doubleForKey(animation_duration_key)
+
+        self.fontSize = defaults.floatForKey(font_size_key)
     }
 
 }
