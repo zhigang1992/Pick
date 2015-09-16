@@ -1,4 +1,7 @@
 PODS:
+  - APAddressBook (0.1.11):
+    - APAddressBook/Core (= 0.1.11)
+  - APAddressBook/Core (0.1.11)
   - RxBlocking (2.0.0-alpha.2):
     - RxSwift (~> 2.0.0-alpha)
   - RxCocoa (2.0.0-alpha.2):
@@ -7,6 +10,7 @@ PODS:
   - SwiftyJSON (2.2.1)
 
 DEPENDENCIES:
+  - APAddressBook
   - RxBlocking (~> 2.0.0-alpha)
   - RxCocoa (~> 2.0.0-alpha)
   - RxSwift (~> 2.0.0-alpha)
@@ -23,6 +27,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
+  APAddressBook: 2c949367b190a993d2cce769a3b20bce8bcf000c
   RxBlocking: 0f0fc3a2a845d5bde0cc9fafa949d3af1b0f491c
   RxCocoa: 77f76f7319f725cfb418fcb74388689753cbfac6
   RxSwift: 0450126df5f8de3ec7ee789b420d7ba98baea364

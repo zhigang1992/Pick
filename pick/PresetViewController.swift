@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SwiftyJSON
+import APAddressBook
 
 struct Preset {
     let name:String
@@ -60,7 +61,21 @@ class PresetViewController: UITableViewController {
         self.tableView.delegate = nil
         self.tableView.dataSource = nil
 
-        let contactPreset = Preset(name: "Contacts", hint: "Choose", candidate: [], skipWinner: true, autoRestart: true)
+        var contactPreset = Preset(name: "Contacts", hint: "Choose", candidate: [], skipWinner: true, autoRestart: true)
+
+        contactPreset.prerender = create({ subscribe -> Disposable in
+            APAddressBook().loadContacts({ (contacts, error) -> Void in
+                if error != nil {
+                    subscribe.on(Event.Error(NSError(domain: "System", code: 403, userInfo: [NSLocalizedDescriptionKey: "Please allow access in Settings.app"])))
+                } else {
+                    let candidates = contacts.map({"\($0.firstName) \($0.lastName)"})
+                    subscribe.on(Event.Next(Preset(name: contactPreset.name, hint: contactPreset.hint, candidate: candidates, skipWinner: contactPreset.skipWinner, autoRestart: contactPreset.autoRestart)))
+                }
+            })
+            return AnonymousDisposable {
+                
+            }
+        })
 
         let allPresets = just([
             SectionModel(model: "", items: [Preset(name: "Tutorial", hint: "Hit it", candidate: ["Shake", "Pinch", "Hold"], skipWinner: true, autoRestart: true)]),
