@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import AVFoundation
 
 class ViewController: UIViewController {
 
@@ -16,6 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet var tap: UITapGestureRecognizer!
     @IBOutlet var hold: UILongPressGestureRecognizer!
     @IBOutlet weak var text: UILabel!
+    @IBOutlet weak var doubleTap:UITapGestureRecognizer!
 
     let disposeBag = DisposeBag()
 
@@ -27,8 +29,10 @@ class ViewController: UIViewController {
 
     var animating = false
 
+    let speechSynthesizer = AVSpeechSynthesizer()
+
     var startSignal:Observable<()> {
-        let tapStart = tap.rx_event.map({ _ in return () })
+        let tapStart = tap.rx_event.filter({$0.state == .Ended}).map({ _ in return () })
 
         return [tapStart, shake].asObservable().merge()
             .filter({[unowned self] _ in return !self.animating})
@@ -99,6 +103,10 @@ class ViewController: UIViewController {
         return self.hold.rx_event.filter({$0.state == .Began}).map({_ in return () })
     }
 
+    var doubleTapSignal:Observable<()> {
+        return self.doubleTap.rx_event.filter({$0.state == .Ended}).map({_ in ()})
+    }
+
     func setup() {
 
         setupDefault()
@@ -136,6 +144,11 @@ class ViewController: UIViewController {
                 self.performSegueWithIdentifier(Segue.Settings.identifier!, sender: nil)
                 })
             .addDisposableTo(disposeBag)
+
+        self.doubleTapSignal
+            .subscribeNext({ [unowned self] _ in
+                self.speechSynthesizer.speakUtterance(AVSpeechUtterance(string: self.text.text!))
+            })
     }
 
     func setupDefault() {

@@ -38,10 +38,12 @@
                             <outletCollection property="gestureRecognizers" destination="kas-LC-DWx" appends="YES" id="4dJ-3r-Bvl"/>
                             <outletCollection property="gestureRecognizers" destination="r2d-7h-qJV" appends="YES" id="ws5-ft-cpi"/>
                             <outletCollection property="gestureRecognizers" destination="edW-af-bC6" appends="YES" id="UlL-Nu-6LD"/>
+                            <outletCollection property="gestureRecognizers" destination="c70-rK-IDC" appends="YES" id="1TQ-jx-yUO"/>
                         </connections>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="doubleTap" destination="c70-rK-IDC" id="iQb-No-f4x"/>
                         <outlet property="hold" destination="edW-af-bC6" id="Ilw-0G-5VN"/>
                         <outlet property="pinch" destination="kas-LC-DWx" id="TiB-FX-1ZR"/>
                         <outlet property="tap" destination="r2d-7h-qJV" id="jbr-oA-Zmw"/>
@@ -53,6 +55,7 @@
                 <pinchGestureRecognizer id="kas-LC-DWx"/>
                 <tapGestureRecognizer id="r2d-7h-qJV"/>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.29999999999999999" id="edW-af-bC6"/>
+                <tapGestureRecognizer delaysTouchesBegan="YES" numberOfTapsRequired="2" id="c70-rK-IDC"/>
             </objects>
             <point key="canvasLocation" x="546" y="405"/>
         </scene>
