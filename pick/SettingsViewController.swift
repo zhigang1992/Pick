@@ -76,6 +76,9 @@ class SettingsViewController: UITableViewController {
 
         animationSpeed.selectedSegmentIndex = DataHolder.shared.animationSpeed.rawValue
         animationSpeed.rx_value.subscribeNext({DataHolder.shared.animationSpeed = DataHolder.AnimationSpeed(rawValue: $0)!}).addDisposableTo(disposeBag)
+
+        animationDuration.selectedSegmentIndex = Int(DataHolder.shared.animaitonDuration)
+        animationDuration.rx_value.subscribeNext({ DataHolder.shared.animaitonDuration = Double($0) }).addDisposableTo(disposeBag)
     }
 
     override func viewWillDisappear(animated: Bool) {
