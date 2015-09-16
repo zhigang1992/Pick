@@ -97,7 +97,8 @@ class ViewController: UIViewController {
 
         self.startSignal
             .flatMap({[unowned self] _ -> Observable<Int64> in
-                return interval(0.03, MainScheduler.sharedInstance).takeUntil(self.stopSignal)
+                let time = DataHolder.shared.animationSpeed.speed
+                return interval(time, MainScheduler.sharedInstance).takeUntil(self.stopSignal)
                 })
             .map({ _ -> (UIColor, String) in
                 let color = UIColor(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1.0)

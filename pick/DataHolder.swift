@@ -14,6 +14,8 @@ let selected_candidates_key = "winners"
 let skip_winner_key = "skipCandidate"
 let auto_restart_key = "autoRestart"
 
+let animation_speed_key = "anmiationSpeed"
+
 class DataHolder {
     static let shared = DataHolder()
 
@@ -62,12 +64,35 @@ class DataHolder {
         }
     }
 
+    var animationSpeed:AnimationSpeed {
+        didSet {
+            defaults.setInteger(self.animationSpeed.rawValue, forKey: animation_speed_key)
+        }
+    }
+
+    enum AnimationSpeed : Int {
+        case slow = 0
+        case normal = 1
+        case fast = 2
+        var speed:Double {
+            switch self {
+            case .slow:
+                return 0.2
+            case .normal:
+                return 0.1
+            case .fast:
+                return 0.05
+            }
+        }
+    }
+
     init () {
         defaults.registerDefaults([
             hint_key: "Hit it",
             candidates_key: ["Shake", "Pinch", "Hold"],
             skip_winner_key: true,
-            auto_restart_key: true
+            auto_restart_key: true,
+            animation_speed_key: AnimationSpeed.normal.rawValue
             ])
 
         self.candidates = defaults.objectForKey(candidates_key) as? [String] ?? []
@@ -75,6 +100,8 @@ class DataHolder {
         self.skipWinners = defaults.boolForKey(skip_winner_key)
         self.autoRestart = defaults.boolForKey(auto_restart_key)
         self.hint = defaults.stringForKey(hint_key) ?? ""
+
+        self.animationSpeed = AnimationSpeed(rawValue: defaults.integerForKey(animation_speed_key))!
     }
 
 }

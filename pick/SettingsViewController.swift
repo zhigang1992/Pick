@@ -37,9 +37,9 @@ class SettingsViewController: UITableViewController {
         skipWinnerSignal.connect().addDisposableTo(disposeBag)
         skipWinnerSignal.bindTo(self.restartAutomatically.rx_enabled)
             .addDisposableTo(disposeBag)
-        skipWinnerSignal.subscribeNext({[unowned self] s in
-            self.resetSelecteds.textLabel?.enabled = s
-        }).addDisposableTo(disposeBag)
+//        skipWinnerSignal.subscribeNext({[unowned self] s in
+//            self.resetSelecteds.textLabel?.enabled = s
+//        }).addDisposableTo(disposeBag)
         skipWinnerSignal.subscribeNext({s in
             DataHolder.shared.skipWinners = s
         })
@@ -70,9 +70,12 @@ class SettingsViewController: UITableViewController {
             return t.componentsSeparatedByString("\n")
         }).subscribeNext({ data in
             DataHolder.shared.candidates = data
-        })
+        }).addDisposableTo(disposeBag)
         self.skipWinners.on = DataHolder.shared.skipWinners
         self.restartAutomatically.on = DataHolder.shared.autoRestart
+
+        animationSpeed.selectedSegmentIndex = DataHolder.shared.animationSpeed.rawValue
+        animationSpeed.rx_value.subscribeNext({DataHolder.shared.animationSpeed = DataHolder.AnimationSpeed(rawValue: $0)!}).addDisposableTo(disposeBag)
     }
 
     override func viewWillDisappear(animated: Bool) {
