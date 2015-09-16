@@ -33,16 +33,20 @@ class SettingsViewController: UITableViewController {
     let disposeBag = DisposeBag()
 
     func setup() {
-        let skipWinnerSignal = self.skipWinners.rx_value.publish()
-        skipWinnerSignal.connect().addDisposableTo(disposeBag)
+        self.skipWinners.on = DataHolder.shared.skipWinners
+        self.restartAutomatically.on = DataHolder.shared.autoRestart
+
+        let skipWinnerSignal = self.skipWinners.rx_value.doOn(next: { s in
+            DataHolder.shared.skipWinners = s
+        }).publish()
         skipWinnerSignal.bindTo(self.restartAutomatically.rx_enabled)
             .addDisposableTo(disposeBag)
-//        skipWinnerSignal.subscribeNext({[unowned self] s in
-//            self.resetSelecteds.textLabel?.enabled = s
-//        }).addDisposableTo(disposeBag)
-        skipWinnerSignal.subscribeNext({s in
-            DataHolder.shared.skipWinners = s
-        })
+        skipWinnerSignal.subscribeNext({[unowned self] s in
+            self.resetSelecteds.textLabel?.enabled = s
+            self.resetSelecteds.userInteractionEnabled = s
+        }).addDisposableTo(disposeBag)
+        skipWinnerSignal.connect()
+            .addDisposableTo(disposeBag)
 
         self.restartAutomatically.rx_value.subscribeNext({ r in
             DataHolder.shared.autoRestart = r
@@ -71,14 +75,16 @@ class SettingsViewController: UITableViewController {
         }).subscribeNext({ data in
             DataHolder.shared.candidates = data
         }).addDisposableTo(disposeBag)
-        self.skipWinners.on = DataHolder.shared.skipWinners
-        self.restartAutomatically.on = DataHolder.shared.autoRestart
 
         animationSpeed.selectedSegmentIndex = DataHolder.shared.animationSpeed.rawValue
-        animationSpeed.rx_value.subscribeNext({DataHolder.shared.animationSpeed = DataHolder.AnimationSpeed(rawValue: $0)!}).addDisposableTo(disposeBag)
+        animationSpeed.rx_value
+            .subscribeNext({DataHolder.shared.animationSpeed = DataHolder.AnimationSpeed(rawValue: $0)!})
+            .addDisposableTo(disposeBag)
 
         animationDuration.selectedSegmentIndex = Int(DataHolder.shared.animaitonDuration)
-        animationDuration.rx_value.subscribeNext({ DataHolder.shared.animaitonDuration = Double($0) }).addDisposableTo(disposeBag)
+        animationDuration.rx_value
+            .subscribeNext({ DataHolder.shared.animaitonDuration = Double($0) })
+            .addDisposableTo(disposeBag)
     }
 
     override func viewWillDisappear(animated: Bool) {

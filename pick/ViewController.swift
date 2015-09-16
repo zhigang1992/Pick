@@ -23,12 +23,15 @@ class ViewController: UIViewController {
 
     let screenRotate:PublishSubject<()> = PublishSubject()
 
+    let shake:PublishSubject<()> = PublishSubject()
+
     var animating = false
 
     var startSignal:Observable<()> {
-        return tap.rx_event
+        let tapStart = tap.rx_event.map({ _ in return () })
+
+        return [tapStart, shake].asObservable().merge()
             .filter({[unowned self] _ in return !self.animating})
-            .map({ _ in return () })
             .doOn(next: {[unowned self] _ in self.animating = true})
             .doOn(next: {
                 if DataHolder.shared.autoRestart && DataHolder.shared.availableCadidates.count == 0 {
@@ -51,7 +54,7 @@ class ViewController: UIViewController {
     var stopSignal:Observable<()> {
         let animationDuration = DataHolder.shared.animaitonDuration
         let autoStopSignal:Observable<()> = animationDuration > 0 ? interval(animationDuration, MainScheduler.sharedInstance).take(1).map({_ in return () }) : empty()
-        let manualSignal:Observable<()> = [tap.rx_event.map({_ in return () }), autoStopSignal]
+        let manualSignal:Observable<()> = [tap.rx_event.map({_ in return () }), autoStopSignal, shake]
             .asObservable()
             .merge()
             .take(1)
@@ -152,6 +155,16 @@ class ViewController: UIViewController {
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         screenRotate.on(Event.Next(()))
+    }
+
+    override func canBecomeFirstResponder() -> Bool {
+        return true
+    }
+
+    override func motionBegan(motion: UIEventSubtype, withEvent event: UIEvent?) {
+        if motion == .MotionShake {
+            shake.on(Event.Next(()))
+        }
     }
 
     override func didReceiveMemoryWarning() {
