@@ -32,25 +32,27 @@ class PresetViewController: UITableViewController {
 
     let disposeBag = DisposeBag()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.tableView.delegate = nil
-        self.tableView.dataSource = nil
-
+    static let presets:[Preset] = {
         let path = NSBundle.mainBundle().pathForResource("presets", ofType: "json")!
 
         let content = try! NSJSONSerialization.JSONObjectWithData(NSData(contentsOfFile: path)!, options: NSJSONReadingOptions.MutableContainers)
         let json = JSON(content)
-        let presets = json.arrayValue.map({ (json:JSON) in
+        return json.arrayValue.map({ (json:JSON) in
             return Preset(name:json["name"].stringValue,
                 hint: json["hint"].stringValue,
                 candidate: json["candidate"].arrayValue.map({$0.stringValue}),
                 skipWinner: json["skipWinner"].boolValue,
                 autoRestart: json["autoRestart"].boolValue)
         })
+        }()
 
-        let allPresets = just([SectionModel(model: "", items: presets)])
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
+
+        let allPresets = just([SectionModel(model: "", items: PresetViewController.presets)])
 
         dataSource.cellFactory = { (tv, ip, preset:Preset) in
             let cell = tv.dequeueReusableCellWithIdentifier(Reusable.Preset.identifier!, forIndexPath: ip)

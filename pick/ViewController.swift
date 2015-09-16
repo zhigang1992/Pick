@@ -32,7 +32,6 @@ class ViewController: UIViewController {
 
         return [tapStart, shake].asObservable().merge()
             .filter({[unowned self] _ in return !self.animating})
-            .doOn(next: {[unowned self] _ in self.animating = true})
             .doOn(next: {
                 if DataHolder.shared.autoRestart && DataHolder.shared.availableCadidates.count == 0 {
                     DataHolder.shared.selectedCandidates = []
@@ -49,6 +48,7 @@ class ViewController: UIViewController {
                 }
                 return valid
             })
+            .doOn(next: {[unowned self] _ in self.animating = true})
     }
 
     var stopSignal:Observable<()> {
