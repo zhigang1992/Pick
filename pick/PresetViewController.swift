@@ -68,12 +68,17 @@ class PresetViewController: UITableViewController {
                 if error != nil {
                     subscribe.on(Event.Error(NSError(domain: "System", code: 403, userInfo: [NSLocalizedDescriptionKey: "Please allow access in Settings.app"])))
                 } else {
-                    let candidates = contacts.map({"\($0.firstName) \($0.lastName)"})
+                    let candidates = contacts.map({ (contact) -> String in
+                        let names:String = [contact.firstName, contact.middleName, contact.lastName].flatMap{ name in
+                            return name.flatMap{ [$0] } ?? []
+                        }.joinWithSeparator(" ")
+                        return names
+                    })
                     subscribe.on(Event.Next(Preset(name: contactPreset.name, hint: contactPreset.hint, candidate: candidates, skipWinner: contactPreset.skipWinner, autoRestart: contactPreset.autoRestart)))
                 }
             })
             return AnonymousDisposable {
-                
+
             }
         })
 
