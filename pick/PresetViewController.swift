@@ -29,6 +29,8 @@ class PresetViewController: UITableViewController {
     let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Preset>>()
     typealias Section = SectionModel<String, Preset>
 
+    let disposeBag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,7 +46,7 @@ class PresetViewController: UITableViewController {
             return cell
         }
 
-        allPresets.bindTo(self.tableView.rx_itemsWithDataSource(self.dataSource))
+        allPresets.bindTo(self.tableView.rx_itemsWithDataSource(self.dataSource)).addDisposableTo(disposeBag)
 
         self.tableView
             .rx_itemSelected
@@ -52,7 +54,7 @@ class PresetViewController: UITableViewController {
             .subscribeNext({[unowned self] (preset:Preset) in
                 preset.saveToUserDefault()
                 self.performSegue(Segue.done)
-        })
+        }).addDisposableTo(disposeBag)
     }
 
 }
