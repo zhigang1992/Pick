@@ -52,7 +52,10 @@ class PresetViewController: UITableViewController {
         self.tableView.delegate = nil
         self.tableView.dataSource = nil
 
-        let allPresets = just([SectionModel(model: "", items: PresetViewController.presets)])
+        let allPresets = just([
+            SectionModel(model: "", items: [Preset(name: "Tutorial", hint: "Hit it", candidate: ["Shake", "Pinch", "Hold"], skipWinner: true, autoRestart: true)]),
+            SectionModel(model: "", items: PresetViewController.presets)
+            ])
 
         dataSource.cellFactory = { (tv, ip, preset:Preset) in
             let cell = tv.dequeueReusableCellWithIdentifier(Reusable.Preset.identifier!, forIndexPath: ip)
