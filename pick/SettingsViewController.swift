@@ -87,7 +87,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 
         self.dataSource.text = DataHolder.shared.candidates.joinWithSeparator("\n")
         [self.dataSource.rx_text.throttle(1, MainScheduler.sharedInstance),
-            self.disappear.map({[unowned self] _ -> String in return self.hint.text ?? ""})].asObservable().merge().distinctUntilChanged().skip(1).map({ (t:String) in
+            self.disappear.map({[unowned self] _ -> String in return self.dataSource.text ?? ""})].asObservable().merge().distinctUntilChanged().skip(1).map({ (t:String) in
             return t.componentsSeparatedByString("\n")
         }).subscribeNext({ data in
             DataHolder.shared.candidates = data
