@@ -19,7 +19,6 @@
 		0440B2BA1BA8FC5700923EA3 /* RxTableViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440B2AD1BA8FC5700923EA3 /* RxTableViewSectionedDataSource.swift */; settings = {ASSET_TAGS = (); }; };
 		0440B2BB1BA8FC5700923EA3 /* RxTableViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440B2AE1BA8FC5700923EA3 /* RxTableViewSectionedReloadDataSource.swift */; settings = {ASSET_TAGS = (); }; };
 		0440B2BC1BA8FC5700923EA3 /* Differentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440B2AF1BA8FC5700923EA3 /* Differentiator.swift */; settings = {ASSET_TAGS = (); }; };
-		0440B2BD1BA8FC5700923EA3 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 0440B2B01BA8FC5700923EA3 /* README.md */; settings = {ASSET_TAGS = (); }; };
 		0440B2BE1BA8FC5700923EA3 /* RxDataSourceStarterKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440B2B11BA8FC5700923EA3 /* RxDataSourceStarterKit.swift */; settings = {ASSET_TAGS = (); }; };
 		0440B2BF1BA8FC5700923EA3 /* SectionedViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440B2B21BA8FC5700923EA3 /* SectionedViewType.swift */; settings = {ASSET_TAGS = (); }; };
 		0440B2C01BA8FC5700923EA3 /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0440B2B31BA8FC5700923EA3 /* SectionModel.swift */; settings = {ASSET_TAGS = (); }; };
@@ -47,7 +46,6 @@
 		0440B2AD1BA8FC5700923EA3 /* RxTableViewSectionedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewSectionedDataSource.swift; sourceTree = "<group>"; };
 		0440B2AE1BA8FC5700923EA3 /* RxTableViewSectionedReloadDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewSectionedReloadDataSource.swift; sourceTree = "<group>"; };
 		0440B2AF1BA8FC5700923EA3 /* Differentiator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Differentiator.swift; sourceTree = "<group>"; };
-		0440B2B01BA8FC5700923EA3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0440B2B11BA8FC5700923EA3 /* RxDataSourceStarterKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxDataSourceStarterKit.swift; sourceTree = "<group>"; };
 		0440B2B21BA8FC5700923EA3 /* SectionedViewType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionedViewType.swift; sourceTree = "<group>"; };
 		0440B2B31BA8FC5700923EA3 /* SectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
@@ -84,7 +82,6 @@
 				0440B2A71BA8FC5700923EA3 /* Changeset.swift */,
 				0440B2A81BA8FC5700923EA3 /* DataSources */,
 				0440B2AF1BA8FC5700923EA3 /* Differentiator.swift */,
-				0440B2B01BA8FC5700923EA3 /* README.md */,
 				0440B2B11BA8FC5700923EA3 /* RxDataSourceStarterKit.swift */,
 				0440B2B21BA8FC5700923EA3 /* SectionedViewType.swift */,
 				0440B2B31BA8FC5700923EA3 /* SectionModel.swift */,
@@ -291,7 +288,6 @@
 				0440B2BA1BA8FC5700923EA3 /* RxTableViewSectionedDataSource.swift in Sources */,
 				049EB1561BA7D33B001C8113 /* MainStoryboard.swift in Sources */,
 				0440B2C01BA8FC5700923EA3 /* SectionModel.swift in Sources */,
-				0440B2BD1BA8FC5700923EA3 /* README.md in Sources */,
 				0440B2C11BA8FC5700923EA3 /* SectionModelType.swift in Sources */,
 				0440B2A51BA8F7DF00923EA3 /* PresetViewController.swift in Sources */,
 				04F93F2A1BA434A0004377C8 /* ViewController.swift in Sources */,

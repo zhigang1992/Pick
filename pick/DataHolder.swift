@@ -108,7 +108,7 @@ class DataHolder {
             skip_winner_key: true,
             auto_restart_key: true,
             animation_speed_key: AnimationSpeed.normal.rawValue,
-            animation_duration_key: 0,
+            animation_duration_key: 2,
             font_size_key: 60.0
             ])
 
