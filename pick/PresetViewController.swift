@@ -65,7 +65,7 @@ class PresetViewController: UITableViewController {
 
         contactPreset.prerender = create({ subscribe -> Disposable in
             APAddressBook().loadContacts({ (contacts, error) -> Void in
-                if error != nil {
+                if contacts == nil {
                     subscribe.on(Event.Error(NSError(domain: "System", code: 403, userInfo: [NSLocalizedDescriptionKey: "Please allow access in Settings.app"])))
                 } else {
                     let candidates = contacts.map({ (contact) -> String in
@@ -98,10 +98,14 @@ class PresetViewController: UITableViewController {
 
         self.tableView
             .rx_itemSelected
+            .doOn(next:{[unowned self] ip in self.tableView.deselectRowAtIndexPath(ip, animated: true)})
             .map({[unowned self] ip in return self.dataSource.itemAtIndexPath(ip) })
             .flatMap({ (preset:Preset) -> Observable<Preset> in
-                return preset.prerender ?? just(preset)
+                return preset.prerender?.doOn(error:{ (error:ErrorType) in
+                    UIAlertView(title: "Error", message: (error as NSError).localizedDescription, delegate: nil, cancelButtonTitle: "Okay").show()
+                }).catchErrorJustReturn(preset) ?? just(preset)
             })
+            .filter({$0.candidate.count > 0})
             .subscribeNext({[unowned self] (preset:Preset) in
                 preset.saveToUserDefault()
                 self.performSegue(Segue.done)

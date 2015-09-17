@@ -82,12 +82,12 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
         }).addDisposableTo(disposeBag)
 
         self.hint.text = DataHolder.shared.hint
-        [self.hint.rx_text.throttle(1, MainScheduler.sharedInstance), self.disappear.map({[unowned self] _ -> String in     return self.hint.text ?? "Hit it"})].asObservable().merge()
-            .subscribeNext({ DataHolder.shared.hint = $0 })
+        self.hint.rx_text.subscribeNext({ DataHolder.shared.hint = $0 })
             .addDisposableTo(disposeBag)
 
         self.dataSource.text = DataHolder.shared.candidates.joinWithSeparator("\n")
-        self.dataSource.rx_text.skip(1).throttle(1, MainScheduler.sharedInstance).map({ (t:String) in
+        [self.dataSource.rx_text.throttle(1, MainScheduler.sharedInstance),
+            self.disappear.map({[unowned self] _ -> String in return self.hint.text ?? ""})].asObservable().merge().distinctUntilChanged().skip(1).map({ (t:String) in
             return t.componentsSeparatedByString("\n")
         }).subscribeNext({ data in
             DataHolder.shared.candidates = data

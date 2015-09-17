@@ -52,7 +52,7 @@
 		0440B2B41BA8FC5700923EA3 /* SectionModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionModelType.swift; sourceTree = "<group>"; };
 		0440B2C21BA928BD00923EA3 /* presets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = presets.json; sourceTree = "<group>"; };
 		049EB1551BA7D33B001C8113 /* MainStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainStoryboard.swift; sourceTree = "<group>"; };
-		04F93F241BA434A0004377C8 /* pick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pick.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		04F93F241BA434A0004377C8 /* Pick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F93F271BA434A0004377C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04F93F291BA434A0004377C8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		04F93F2C1BA434A1004377C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -116,7 +116,7 @@
 		04F93F251BA434A0004377C8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				04F93F241BA434A0004377C8 /* pick.app */,
+				04F93F241BA434A0004377C8 /* Pick.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -178,7 +178,7 @@
 			);
 			name = pick;
 			productName = pick;
-			productReference = 04F93F241BA434A0004377C8 /* pick.app */;
+			productReference = 04F93F241BA434A0004377C8 /* Pick.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -416,7 +416,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackplan.pick;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Pick;
 			};
 			name = Debug;
 		};
@@ -429,7 +429,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackplan.pick;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Pick;
 			};
 			name = Release;
 		};
