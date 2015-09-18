@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     var startSignal:Observable<()> {
         let tapStart = tap.rx_event.map({ _ in return () })
 
-        return [tapStart, shake].asObservable().merge()
+        return sequenceOf(tapStart, shake).merge()
             .filter({[unowned self] _ in return !self.animating})
             .doOn(next: {
                 if DataHolder.shared.autoRestart && DataHolder.shared.availableCadidates.count == 0 {
@@ -65,7 +65,7 @@ class ViewController: UIViewController {
                 DataHolder.shared.addSelect(winner)
                 self.text.text = winner
             })
-        return [manualSignal, self.disappear].asObservable().merge()
+        return sequenceOf(manualSignal, self.disappear).merge()
                     .doOn(next: {[unowned self] _ in self.animating = false})
     }
 
@@ -84,7 +84,7 @@ class ViewController: UIViewController {
                 return size.height / size.width
                 })
 
-        return  [pinchSignal, rotateSignal].asObservable().merge()
+        return  sequenceOf(pinchSignal, rotateSignal).merge()
             .map({ [unowned self] scale in
                 return self.text.font.pointSize * scale
                 })
@@ -122,13 +122,15 @@ class ViewController: UIViewController {
         let fontChanged = self.fontSizeSignal.publish()
         fontChanged.throttle(0.5, MainScheduler.sharedInstance)
             .subscribeNext({ (fontSize:CGFloat) in
-                DataHolder.shared.fontSize = Float(fontSize)
-        }).addDisposableTo(disposeBag)
+                    DataHolder.shared.fontSize = Float(fontSize)
+            }).addDisposableTo(disposeBag)
+
         fontChanged.map({ UIFont.systemFontOfSize($0) })
             .subscribeNext({ [unowned self] font in
                 self.text.font = font
                 })
             .addDisposableTo(disposeBag)
+
         fontChanged.connect().addDisposableTo(disposeBag)
 
         self.holdSignal
@@ -155,12 +157,12 @@ class ViewController: UIViewController {
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        disappear.on(Event.Next(()))
+        disappear.on(.Next(()))
     }
 
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-        screenRotate.on(Event.Next(()))
+        screenRotate.on(.Next(()))
     }
 
     override func canBecomeFirstResponder() -> Bool {
@@ -169,7 +171,7 @@ class ViewController: UIViewController {
 
     override func motionBegan(motion: UIEventSubtype, withEvent event: UIEvent?) {
         if motion == .MotionShake {
-            shake.on(Event.Next(()))
+            shake.on(.Next(()))
         }
     }
 
